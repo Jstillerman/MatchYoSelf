@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">MatchYoSelf</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+    
+      <br><br>
+      <div class="row center">
+       
+      </div>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="name" type="text" class="validate">
+              <label for="name" id="nameLabel">What's your name?</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <p class="caption">What are some things you like?</p>
+              <div id="interests" class="chips chips-autocomplete"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="contact" type="text" class="validate">
+              <label for="contact" id="nameLabel">How should your match conact you?</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="age" type="number" class="validate">
+              <label for="age" id="ageLabel">How old are you?</label>
+            </div>
+          </div>
+          <div class="row">
+            <a id="find" class="waves-effect waves-light btn-large"><i class="material-icons right">cloud</i>Find me an amigo</a>
+          </div>
+       </form>
+    </div>
+  </div>
+
+  <!--  Scripts-->
+  <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  <script>
+  
+  nameField = document.getElementById("name")
+  nameField.style.height="100px"
+  nameField.style.fontSize="50pt"
+
+
+  selfData = {
+    interests: [],
+    name: "",
+    age: -1
+  }
+
+  document.getElementById("nameLabel").style.fontSize="30pt"
+
+  $('.chips').material_chip();
+
+  $('.chips').on('chip.add', function(e, chip){
+    selfData.interests.push(chip.tag.toLowerCase())
+  });
+
+  $('#find').click(function(){
+    selfData.name = $("#name").val()
+    selfData.age = $("#age").val()
+    selfData.contact = $("#contact").val()
+    $.ajax("http://localhost:3000/submit/" + JSON.stringify(selfData)).done(function(data){
+      window.location.replace("http://localhost:3000/results?uid="+data)
+    })
+  })
+
+  </script>
+
+  </body>
+</html>
